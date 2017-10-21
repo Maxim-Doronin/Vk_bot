@@ -4,6 +4,7 @@ import csv
 import vk_api
 
 token = '62c3be70c2ca81fb42ac7b27a191519631c6f053c4d6a6261ffec1194a259825869fb70eca214a0f3694f'
+group_id = 155433239
 vk = vk_api.VkApi(token=token)
 
 values = {'out': 0, 'count': 100, 'time_offset': 5}

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import random
 from resources import *
 import time
-from writer import Writer
+from writer import *
 
 
 class User:
@@ -28,6 +28,8 @@ class User:
         return False
 
     def is_right_answer(self, answer):
+        if not answers.get(self.root_message_id):
+            return False
         if not answer == 0 and answer in answers.get(self.root_message_id):
             return True
         if not answer == 0 and answer not in answers.get(self.root_message_id):
@@ -99,6 +101,9 @@ class Users:
 
     def update(self):
         for user in self.users:
+            is_allowed = vk.method('messages.isMessagesFromGroupAllowed', {'user_id': user.id, 'group_id': group_id})
+            if is_allowed['is_allowed'] == 0:
+                continue
             if user.id in self.answers.keys():
                 user.send_message_if_needed(self.answers.pop(user.id))
             else:
